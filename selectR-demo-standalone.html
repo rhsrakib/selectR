@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>selectR Bootstrap 5 Select Library Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="selectR.css" />
+  <style>
+    body {
+      background: #f5f7fa;
+    }
+
+    .demo-section {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e3e8ef;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .demo-section h5 {
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: #1a2340;
+    }
+
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.82rem;
+      overflow-x: auto;
+    }
+
+    .badge-pill {
+      border-radius: 20px;
+    }
+
+    .dark-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 9999;
+    }
+
+    .output-box {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      font-size: .85rem;
+      color: #334155;
+      margin-top: .75rem;
+      min-height: 2.5rem;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="btn btn-sm btn-outline-secondary dark-toggle" id="themeToggle">Ã°Å¸Å’â„¢ Dark mode</button>
+
+  <div class="container py-5" style="max-width: 900px;">
+
+    <div class="mb-5">
+      <h1 class="fw-bold mb-1" style="color:#1a2340;">selectR <span
+          class="badge bg-primary fs-6 align-middle">v1.0.0</span></h1>
+      <p class="text-muted mb-0">A lightweight, framework-agnostic select enhancement single, multiple, searchable,
+        server-side, infinite scroll &amp; more.</p>
+    </div>
+
+    <!-- 1. Single Select -->
+    <div class="demo-section">
+      <h5>1. Single Select (with clear button)</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Default (checkbox marker)</label>
+          <select id="single1">
+            <option value="">Choose a country</option>
+            <option value="us">United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="de">Germany</option>
+            <option value="fr">France</option>
+            <option value="jp">Japan</option>
+            <option value="au">Australia</option>
+            <option value="br">Brazil</option>
+            <option value="ca">Canada</option>
+            <option value="in">India</option>
+            <option value="sg">Singapore</option>
+          </select>
+          <div class="output-box" id="out1">No value selected</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Tick marker, no clear button</label>
+          <select id="single2">
+            <option value="">Pick a role</option>
+            <option value="admin">Administrator</option>
+            <option value="editor">Editor</option>
+            <option value="viewer">Viewer</option>
+            <option value="guest" disabled>Guest (disabled)</option>
+          </select>
+          <div class="output-box" id="out2">No value selected</div>
+        </div>
+      </div>
+      <pre class="mt-3">selectR('#single1', {
+  mode: 'single',
+  marker: 'checkbox',
+  showClearButton: true,
+  onChange: (val) => console.log(val)
+});
+
+selectR('#single2', {
+  mode: 'single',
+  marker: 'tick',
+  showClearButton: false,
+});</pre>
+    </div>
+
+    <!-- 1.5. Floating Labels -->
+    <div class="demo-section">
+      <h5>1.5. Native Floating Labels (Framework-Agnostic)</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <p class="text-muted small mb-3">SelectR provides its own <code>.selectr-floating</code> class so you can
+            build beautiful floating labels without Bootstrap! (Note: It also fully supports Bootstrap's native
+            <code>.form-floating</code> if you prefer.)
+          </p>
+          <div class="selectr-floating mb-3">
+            <select id="floatingSelect" data-selectr='{"marker":"tick"}'>
+              <option value="">Select a region</option>
+              <option value="na">North America</option>
+              <option value="eu">Europe</option>
+              <option value="asia">Asia</option>
+              <option value="sa">South America</option>
+            </select>
+            <label for="floatingSelect">Choose your region</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <pre class="mb-0 mt-4">&lt;div class="selectr-floating mb-3"&gt;
+  &lt;select data-selectr='{"marker":"tick"}'&gt;
+    &lt;option value=""&gt;Select a region&lt;/option&gt;
+    ...
+  &lt;/select&gt;
+  &lt;label&gt;Choose your region&lt;/label&gt;
+&lt;/div&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Multiple Select  Overflow, Drawer & Summary -->
+    <div class="demo-section">
+      <h5>2. Multiple Select Overflow Drawer &amp; Summary Pill</h5>
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Tag limit 2 <code>+N More Items Selected</code> pill +
+            drawer</label>
+          <p class="text-muted small mb-1">Select more than 2 overflow pill appears. Click it to open the inline
+            drawer.</p>
+          <select id="multi1" multiple>
+            <option value="js">JavaScript</option>
+            <option value="ts">TypeScript</option>
+            <option value="py">Python</option>
+            <option value="cs">C#</option>
+            <option value="go">Go</option>
+            <option value="rs">Rust</option>
+            <option value="java">Java</option>
+            <option value="rb">Ruby</option>
+          </select>
+          <div class="output-box" id="out3">None selected</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Summary mode <code>summaryThreshold: 3</code></label>
+          <p class="text-muted small mb-1">Once 3+ items selected, collapses to "N Items Selected" pill. Click to open
+            drawer.</p>
+          <select id="multi2" multiple>
+            <option value="mon">Monday</option>
+            <option value="tue">Tuesday</option>
+            <option value="wed">Wednesday</option>
+            <option value="thu">Thursday</option>
+            <option value="fri">Friday</option>
+            <option value="sat">Saturday</option>
+            <option value="sun">Sunday</option>
+          </select>
+          <div class="output-box" id="out4">None selected</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Tag limit 3, max 6 selections, toolbar in drawer</label>
+          <select id="multi3" multiple>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="js2">JavaScript</option>
+            <option value="ts2">TypeScript</option>
+            <option value="sass">Sass/SCSS</option>
+            <option value="tw">Tailwind CSS</option>
+            <option value="bs">Bootstrap</option>
+            <option value="wp">Webpack</option>
+            <option value="vite">Vite</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">No tag limit show all, drawer for Select/Clear All</label>
+          <p class="text-muted small mb-1"><code>tagLimit: null</code> all tags visible. Drawer accessible via
+            toolbar.</p>
+          <select id="multi4" multiple>
+            <option value="a">Alpha</option>
+            <option value="b">Beta</option>
+            <option value="c">Gamma</option>
+            <option value="d">Delta</option>
+            <option value="e">Epsilon</option>
+          </select>
+        </div>
+
+      </div>
+      <pre class="mt-3">// Tag limit + overflow pill  drawer
+selectR('#multi1', {
+  mode: 'multiple',
+  marker: 'checkbox',
+  tagLimit: 2,          // show 2 tags, rest become "+N More Items Selected" pill
+  showDrawer: true,     // drawer opens when pill is clicked
+  showToolbar: true,    // toolbar inside dropdown has Select All / Clear All too
+});
+
+// Summary pill (collapses to "N Items Selected" once threshold hit)
+selectR('#multi2', {
+  mode: 'multiple',
+  marker: 'circle',
+  summaryThreshold: 3,  // collapse to summary pill when >= 3 selected
+  summaryLabel: 'Items Selected',
+  showDrawer: true,     // drawer lists all selected + individual remove + Select/Clear All
+});</pre>
+    </div>
+
+    <!-- 2b. Display Styles -->
+    <div class="demo-section">
+      <h5>2b. Selected Item Display Styles <span class="badge bg-primary">NEW</span></h5>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Pill <small class="text-muted">(default)</small></label>
+          <p class="text-muted small mb-1">Coloured badge + Ã¢Å“â€¢ per item</p>
+          <select id="dsPill" multiple>
+            <option value="js">JavaScript</option>
+            <option value="ts">TypeScript</option>
+            <option value="py">Python</option>
+            <option value="cs">C#</option>
+            <option value="go">Go</option>
+            <option value="rs">Rust</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Plain</label>
+          <p class="text-muted small mb-1">Text label + small Ã¢Å“â€¢, no background</p>
+          <select id="dsPlain" multiple>
+            <option value="js">JavaScript</option>
+            <option value="ts">TypeScript</option>
+            <option value="py">Python</option>
+            <option value="cs">C#</option>
+            <option value="go">Go</option>
+            <option value="rs">Rust</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Comma</label>
+          <p class="text-muted small mb-1">All labels joined, +N more overflow</p>
+          <select id="dsComma" multiple>
+            <option value="js">JavaScript</option>
+            <option value="ts">TypeScript</option>
+            <option value="py">Python</option>
+            <option value="cs">C#</option>
+            <option value="go">Go</option>
+            <option value="rs">Rust</option>
+          </select>
+        </div>
+      </div>
+      <pre
+        class="mt-3">selectR('#dsPill',  { mode:'multiple', displayStyle:'pill',  tagLimit:2, showDrawer:true });
+selectR('#dsPlain', { mode:'multiple', displayStyle:'plain', tagLimit:2, showDrawer:true });
+selectR('#dsComma', { mode:'multiple', displayStyle:'comma', commaSeparator:' Ã‚Â· ', tagLimit:3, showDrawer:true });</pre>
+    </div>
+
+    <!-- 3. Option Groups -->
+    <div class="demo-section">
+      <h5>3. Grouped Options</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Single with groups</label>
+          <select id="grouped1">
+            <option value="">Select a city</option>
+            <optgroup label="Ã°Å¸â€¡ÂºÃ°Å¸â€¡Â¸ United States">
+              <option value="nyc">New York</option>
+              <option value="la">Los Angeles</option>
+              <option value="chi">Chicago</option>
+            </optgroup>
+            <optgroup label="Ã°Å¸â€¡Â¬Ã°Å¸â€¡Â§ United Kingdom">
+              <option value="lon">London</option>
+              <option value="man">Manchester</option>
+            </optgroup>
+            <optgroup label="Ã°Å¸â€¡Â©Ã°Å¸â€¡Âª Germany">
+              <option value="ber">Berlin</option>
+              <option value="mun">Munich</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Multiple with groups</label>
+          <select id="grouped2" multiple>
+            <optgroup label="Frontend">
+              <option value="react">React</option>
+              <option value="vue">Vue</option>
+              <option value="angular">Angular</option>
+            </optgroup>
+            <optgroup label="Backend">
+              <option value="aspnet">ASP.NET Core</option>
+              <option value="node">Node.js</option>
+              <option value="django">Django</option>
+            </optgroup>
+            <optgroup label="Database">
+              <option value="mssql">SQL Server</option>
+              <option value="pg">PostgreSQL</option>
+              <option value="mongo">MongoDB</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. With icons / avatars / badges -->
+    <div class="demo-section">
+      <h5>4. Rich Options Icons, Avatars &amp; Badges</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">With badges</label>
+          <select id="richBadge">
+            <option value="">Select plan</option>
+            <option value="free" data-badge="Free" data-badge-class="bg-secondary">Free Tier</option>
+            <option value="pro" data-badge="PRO" data-badge-class="bg-primary">Pro</option>
+            <option value="team" data-badge="TEAM" data-badge-class="bg-success">Team</option>
+            <option value="ent" data-badge="ENTERPRISE" data-badge-class="bg-danger">Enterprise</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">With description text</label>
+          <select id="richDesc">
+            <option value="">Select size</option>
+            <option value="xs" data-description="0.5 vCPU Ã‚Â· 512 MB RAM">XS Micro</option>
+            <option value="sm" data-description="1 vCPU Ã‚Â· 1 GB RAM">SM Small</option>
+            <option value="md" data-description="2 vCPU Ã‚Â· 4 GB RAM">MD Medium</option>
+            <option value="lg" data-description="4 vCPU Ã‚Â· 16 GB RAM">LG Large</option>
+            <option value="xl" data-description="8 vCPU Ã‚Â· 64 GB RAM">XL Extra Large</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Sizes -->
+    <div class="demo-section">
+      <h5>5. Sizes</h5>
+      <div class="row g-3 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Small (sm)</label>
+          <select id="sizeSm">
+            <option value="">Small select</option>
+            <option value="a">Option A</option>
+            <option value="b">Option B</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Default</label>
+          <select id="sizeMd">
+            <option value="">Default select</option>
+            <option value="a">Option A</option>
+            <option value="b">Option B</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Large (lg)</label>
+          <select id="sizeLg">
+            <option value="">Large select</option>
+            <option value="a">Option A</option>
+            <option value="b">Option B</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Validation -->
+    <div class="demo-section">
+      <h5>6. Validation States</h5>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Valid</label>
+          <select id="valValid">
+            <option value="yes">Great choice!</option>
+          </select>
+          <div class="valid-feedback d-block">Looks good!</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Invalid</label>
+          <select id="valInvalid">
+            <option value="">Select something</option>
+          </select>
+          <div class="invalid-feedback d-block">Please select an option.</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Disabled</label>
+          <select id="valDisabled" disabled>
+            <option value="dis">Disabled</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Marker styles -->
+    <div class="demo-section">
+      <h5>7. Marker Styles</h5>
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">Checkbox</label>
+          <select id="mkCheckbox" multiple>
+            <option value="a">Apple</option>
+            <option value="b">Banana</option>
+            <option value="c">Cherry</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">Tick</label>
+          <select id="mkTick" multiple>
+            <option value="a">Apple</option>
+            <option value="b">Banana</option>
+            <option value="c">Cherry</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">Circle</label>
+          <select id="mkCircle" multiple>
+            <option value="a">Apple</option>
+            <option value="b">Banana</option>
+            <option value="c">Cherry</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">None</label>
+          <select id="mkNone" multiple>
+            <option value="a">Apple</option>
+            <option value="b">Banana</option>
+            <option value="c">Cherry</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Server-side / AJAX -->
+    <div class="demo-section">
+      <h5>8. Server-side Search (AJAX) simulated</h5>
+      <p class="text-muted small mb-3">Type to search results are fetched from a simulated endpoint (intercepted
+        locally for demo).</p>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">AJAX Single</label>
+          <select id="ajaxSingle"></select>
+          <div class="output-box" id="outAjax">No value selected</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">AJAX Multiple + Infinite Scroll</label>
+          <select id="ajaxMulti" multiple></select>
+          <div class="output-box" id="outAjaxMulti">None selected</div>
+        </div>
+      </div>
+      <ul class="nav nav-tabs mt-3" id="ajaxTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="ajax-vanilla-tab" data-bs-toggle="tab" data-bs-target="#ajax-vanilla"
+            type="button" role="tab">Vanilla JS</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="ajax-jquery-tab" data-bs-toggle="tab" data-bs-target="#ajax-jquery" type="button"
+            role="tab">jQuery</button>
+        </li>
+      </ul>
+      <div class="tab-content border border-top-0 rounded-bottom p-3 bg-light">
+        <div class="tab-pane fade show active" id="ajax-vanilla" role="tabpanel">
+          <pre class="mb-0 bg-white border rounded p-2">// Vanilla JS Implementation
+const el = document.getElementById('ajaxSingle');
+
+new SelectR(el, {
+  infiniteScroll: true,
+  pageSize: 20, 
+  ajax: {
+    url: '/api/options', 
+    method: 'GET',
+    data: function(params) {
+      return {
+        q: params.query, 
+        page: params.page,
+        pageSize: 20 
+      };
+    },
+    processResults: function(response) {
+      return {
+        results: response.data, 
+        hasMore: response.hasMore
+      };
+    }
+  }
+});</pre>
+        </div>
+        <div class="tab-pane fade" id="ajax-jquery" role="tabpanel">
+          <pre class="mb-0 bg-white border rounded p-2">// jQuery Implementation
+$('#ajaxSingle').selectR({
+  infiniteScroll: true,
+  pageSize: 20,
+  ajax: {
+    url: '/api/options',
+    method: 'GET',
+    data: function(params) {
+      return {
+        q: params.query,
+        page: params.page,
+        pageSize: 20
+      };
+    },
+    processResults: function(response) {
+      return {
+        results: response.data,
+        hasMore: response.hasMore
+      };
+    }
+  }
+});</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Programmatic API -->
+    <div class="demo-section">
+      <h5>9. Programmatic API</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Controlled select</label>
+          <select id="apiDemo" multiple>
+            <option value="1">Item One</option>
+            <option value="2">Item Two</option>
+            <option value="3">Item Three</option>
+            <option value="4">Item Four</option>
+            <option value="5">Item Five</option>
+          </select>
+          <div class="output-box" id="outApi">None selected</div>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <button class="btn btn-sm btn-outline-primary" id="btnSetVal">Set [2,4]</button>
+            <button class="btn btn-sm btn-outline-success" id="btnSelAll">Select All</button>
+            <button class="btn btn-sm btn-outline-danger" id="btnClear">Clear</button>
+            <button class="btn btn-sm btn-outline-warning" id="btnAddOpt">Add option</button>
+            <button class="btn btn-sm btn-outline-secondary" id="btnDisable">Disable/Enable</button>
+            <button class="btn btn-sm btn-outline-info" id="btnOpen">Open/Close</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Dynamic marker switch</label>
+          <select id="markerSwitch" multiple>
+            <option value="a" selected>Alpha</option>
+            <option value="b">Beta</option>
+            <option value="c" selected>Gamma</option>
+            <option value="d">Delta</option>
+          </select>
+          <div class="btn-group mt-2 w-100" role="group">
+            <button class="btn btn-sm btn-outline-secondary" data-marker="checkbox">Checkbox</button>
+            <button class="btn btn-sm btn-outline-secondary" data-marker="tick">Tick</button>
+            <button class="btn btn-sm btn-outline-secondary" data-marker="circle">Circle</button>
+            <button class="btn btn-sm btn-outline-secondary" data-marker="none">None</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Data attribute auto-init -->
+    <div class="demo-section">
+      <h5>10. Auto-init via <code>data-selectr</code> attribute</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">No JS needed just add the attribute</label>
+          <select data-selectr='{"mode":"multiple","marker":"tick","placeholder":"Auto-initialized!"}'>
+            <option value="x">Option X</option>
+            <option value="y">Option Y</option>
+            <option value="z">Option Z</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Razor view (ASP.NET Core)</label>
+          <pre style="margin:0;font-size:.78rem;">@* In your .cshtml view: *@
+&lt;select asp-for="CategoryId"
+        asp-items="Model.Categories"
+        data-selectr='{"marker":"tick"}'&gt;
+  &lt;option value=""&gt;Select category&lt;/option&gt;
+&lt;/select&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery plugin -->
+    <div class="demo-section">
+      <h5>11. jQuery Plugin</h5>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">jQuery initialized</label>
+        <select id="jqueryDemo">
+          <option value="">Select a color</option>
+          <option value="r">Red</option>
+          <option value="g">Green</option>
+          <option value="b">Blue</option>
+        </select>
+      </div>
+      <pre class="mt-2">// jQuery plugin (auto-registered if jQuery is present)
+$('#jqueryDemo').selectR({ marker: 'circle', showClearButton: true });
+
+// Or via jQuery selector (multiple elements):
+$('.my-selects').selectR({ mode: 'multiple' });</pre>
+    </div>
+
+    <!-- Full options reference -->
+    <div class="demo-section">
+      <h5>12. Full Options Reference</h5>
+      <div class="table-responsive">
+        <table class="table table-sm table-bordered align-middle" style="font-size:.84rem;">
+          <thead class="table-dark">
+            <tr>
+              <th>HTML Attribute</th>
+              <th>JS/jQuery Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>data-sr-mode</code></td>
+              <td><code>mode</code></td>
+              <td>string</td>
+              <td><code>'single'</code></td>
+              <td><code>'single'</code> or <code>'multiple'</code></td>
+            </tr>
+            <tr>
+              <td><code>data-sr-placeholder</code></td>
+              <td><code>placeholder</code></td>
+              <td>string</td>
+              <td><code>'Select'</code></td>
+              <td>Placeholder text when nothing selected</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-disabled</code></td>
+              <td><code>disabled</code></td>
+              <td>boolean</td>
+              <td><code>false</code></td>
+              <td>Disable the component</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-readonly</code></td>
+              <td><code>readonly</code></td>
+              <td>boolean</td>
+              <td><code>false</code></td>
+              <td>Prevent changes, allow viewing</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-size</code></td>
+              <td><code>size</code></td>
+              <td>string</td>
+              <td><code>''</code></td>
+              <td><code>'sm'</code>, <code>''</code>, <code>'lg'</code></td>
+            </tr>
+            <tr>
+              <td><code>data-sr-marker</code></td>
+              <td><code>marker</code></td>
+              <td>string</td>
+              <td><code>'checkbox'</code></td>
+              <td><code>'checkbox'</code> | <code>'tick'</code> | <code>'circle'</code> | <code>'none'</code></td>
+            </tr>
+            <tr>
+              <td><code>data-sr-show-clear</code></td>
+              <td><code>showClearButton</code></td>
+              <td>boolean</td>
+              <td><code>true</code></td>
+              <td>Show Ã¢Å“â€¢ clear button</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-max-height</code></td>
+              <td><code>maxHeight</code></td>
+              <td>number</td>
+              <td><code>240</code></td>
+              <td>Dropdown list max height (px)</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-dropdown-width</code></td>
+              <td><code>dropdownWidth</code></td>
+              <td>string|null</td>
+              <td><code>null</code></td>
+              <td>Override dropdown width e.g. <code>'400px'</code></td>
+            </tr>
+            <tr>
+              <td><code>data-sr-position</code></td>
+              <td><code>position</code></td>
+              <td>string</td>
+              <td><code>'auto'</code></td>
+              <td><code>'auto'</code> | <code>'up'</code> | <code>'down'</code></td>
+            </tr>
+            <tr>
+              <td><code>data-sr-max-selected</code></td>
+              <td><code>maxSelected</code></td>
+              <td>number|null</td>
+              <td><code>null</code></td>
+              <td>Max selections (multiple mode)</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-tag-limit</code></td>
+              <td><code>tagLimit</code></td>
+              <td>number|null</td>
+              <td><code>null</code></td>
+              <td>Max visible tags before "+N more"</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-close-on-select</code></td>
+              <td><code>closeOnSelect</code></td>
+              <td>boolean</td>
+              <td><code>false</code></td>
+              <td>Close after each selection (multiple)</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-searchable</code></td>
+              <td><code>searchable</code></td>
+              <td>boolean</td>
+              <td><code>true</code></td>
+              <td>Enable search box</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-search-placeholder</code></td>
+              <td><code>searchPlaceholder</code></td>
+              <td>string</td>
+              <td><code>'Search'</code></td>
+              <td>Search input placeholder</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-search-min-length</code></td>
+              <td><code>searchMinLength</code></td>
+              <td>number</td>
+              <td><code>0</code></td>
+              <td>Min chars to trigger search</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-search-debounce</code></td>
+              <td><code>searchDebounce</code></td>
+              <td>number</td>
+              <td><code>300</code></td>
+              <td>Debounce ms for search</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-highlight-match</code></td>
+              <td><code>highlightMatch</code></td>
+              <td>boolean</td>
+              <td><code>true</code></td>
+              <td>Bold matched text in results</td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>ajax</code></td>
+              <td>object|null</td>
+              <td><code>null</code></td>
+              <td>AJAX config see section 8</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-creatable</code></td>
+              <td><code>creatable</code></td>
+              <td>boolean</td>
+              <td><code>false</code></td>
+              <td>Show '+ Add "query"' button when no match is found</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-create-controller</code></td>
+              <td><code>createController</code></td>
+              <td>string</td>
+              <td><code>''</code></td>
+              <td>Controller name for AJAX POST when Add button is clicked</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-create-action</code></td>
+              <td><code>createAction</code></td>
+              <td>string</td>
+              <td><code>''</code></td>
+              <td>Action name for AJAX POST when Add button is clicked</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-create-param</code></td>
+              <td><code>createParam</code></td>
+              <td>string</td>
+              <td><code>'data'</code></td>
+              <td>Property name used for the search query in the POST body</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-infinite-scroll</code></td>
+              <td><code>infiniteScroll</code></td>
+              <td>boolean</td>
+              <td><code>false</code></td>
+              <td>Enable infinite scroll pagination</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-page-size</code></td>
+              <td><code>20</code></td>
+              <td>Items per page (server-side)</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-show-toolbar</code></td>
+              <td><code>showToolbar</code></td>
+              <td>boolean</td>
+              <td><code>true</code></td>
+              <td>Show select/clear all toolbar (multiple)</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-select-all-label</code></td>
+              <td><code>selectAllLabel</code></td>
+              <td>string</td>
+              <td><code>'Select all'</code></td>
+              <td>Toolbar select-all label</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-clear-all-label</code></td>
+              <td><code>clearAllLabel</code></td>
+              <td>string</td>
+              <td><code>'Clear all'</code></td>
+              <td>Toolbar clear-all label</td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>renderOption</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td>Custom option render: <code>(item) =&gt; htmlString</code></td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>renderTag</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td>Custom tag render: <code>(item) =&gt; htmlString</code></td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>renderEmpty</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td>Custom empty state: <code>(query) =&gt; htmlString</code></td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>renderLoading</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td>Custom loading state: <code>() =&gt; htmlString</code></td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>onChange</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td><code>(value, items) =&gt; void</code></td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>onOpen</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td>Called when dropdown opens</td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>onClose</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td>Called when dropdown closes</td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>onSearch</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td><code>(query) =&gt; void</code></td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>onScrollEnd</code></td>
+              <td>function|null</td>
+              <td><code>null</code></td>
+              <td><code>(page) =&gt; void</code> infinite scroll trigger</td>
+            </tr>
+            <tr>
+              <td><code>data-sr-validation</code></td>
+              <td><code>validationClass</code></td>
+              <td>string</td>
+              <td><code>''</code></td>
+              <td><code>'is-valid'</code> | <code>'is-invalid'</code></td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>ariaLabel</code></td>
+              <td>string|null</td>
+              <td><code>null</code></td>
+              <td>Override aria-label on control</td>
+            </tr>
+            <tr>
+              <td><code><i>(JS only)</i></code></td>
+              <td><code>allowHtml</code></td>
+              <td>boolean</td>
+              <td><code>false</code></td>
+              <td>Allow HTML in labels (trusted data only)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h6 class="fw-bold mt-3">Public Methods</h6>
+      <div class="table-responsive">
+        <table class="table table-sm table-bordered" style="font-size:.84rem;">
+          <thead class="table-dark">
+            <tr>
+              <th>Method</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>.setValue(val)</code></td>
+              <td>Set value(s) programmatically</td>
+            </tr>
+            <tr>
+              <td><code>.getValue()</code></td>
+              <td>Get current value(s)</td>
+            </tr>
+            <tr>
+              <td><code>.selectAll()</code></td>
+              <td>Select all visible options</td>
+            </tr>
+            <tr>
+              <td><code>.clearAll()</code></td>
+              <td>Clear all selections</td>
+            </tr>
+            <tr>
+              <td><code>.addOption(item)</code></td>
+              <td>Add an option dynamically</td>
+            </tr>
+            <tr>
+              <td><code>.removeOption(val)</code></td>
+              <td>Remove an option by value</td>
+            </tr>
+            <tr>
+              <td><code>.load(items)</code></td>
+              <td>Replace all options with new array</td>
+            </tr>
+            <tr>
+              <td><code>.refresh()</code></td>
+              <td>Re-read options from native &lt;select&gt;</td>
+            </tr>
+            <tr>
+              <td><code>.enable()</code></td>
+              <td>Enable the select</td>
+            </tr>
+            <tr>
+              <td><code>.disable()</code></td>
+              <td>Disable the select</td>
+            </tr>
+            <tr>
+              <td><code>.open()</code></td>
+              <td>Open the dropdown</td>
+            </tr>
+            <tr>
+              <td><code>.close()</code></td>
+              <td>Close the dropdown</td>
+            </tr>
+            <tr>
+              <td><code>.setPlaceholder(text)</code></td>
+              <td>Update placeholder text</td>
+            </tr>
+            <tr>
+              <td><code>.setMarker(type)</code></td>
+              <td>Change marker style dynamically</td>
+            </tr>
+            <tr>
+              <td><code>.setValidation(state)</code></td>
+              <td>Set <code>'valid'</code> / <code>'invalid'</code> (agnostic) or <code>'is-valid'</code> /
+                <code>'is-invalid'</code> (Bootstrap)
+              </td>
+            </tr>
+            <tr>
+              <td><code>.destroy()</code></td>
+              <td>Remove selectR, restore original &lt;select&gt;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 13. Initialization & API Examples -->
+    <div class="demo-section">
+      <h5>13. Initialization & API Examples</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Vanilla JavaScript</label>
+          <div class="card bg-light border-0">
+            <div class="card-body p-3" style="font-size: .85rem;">
+              <p class="mb-1 fw-bold text-muted">1. Initialize:</p>
+              <pre class="bg-white border rounded p-2 mb-3">const el = document.getElementById('my-select');
+const mySelect = new SelectR(el, { mode: 'multiple' });</pre>
+
+              <p class="mb-1 fw-bold text-muted">2. Call Methods:</p>
+              <pre class="bg-white border rounded p-2 mb-0">// Use the saved instance...
+mySelect.setValue(['1', '2']);
+mySelect.open();
+
+// ...or retrieve it from the DOM element later:
+const instance = document.getElementById('my-select')._selectR;
+instance.clearAll();</pre>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">jQuery</label>
+          <div class="card bg-light border-0">
+            <div class="card-body p-3" style="font-size: .85rem;">
+              <p class="mb-1 fw-bold text-muted">1. Initialize:</p>
+              <pre class="bg-white border rounded p-2 mb-3">$('#my-select').selectR({ 
+  mode: 'multiple' 
+});</pre>
+
+              <p class="mb-1 fw-bold text-muted">2. Call Methods:</p>
+              <pre class="bg-white border rounded p-2 mb-0">// jQuery plugin returns the jQuery object, not the instance.
+// To call methods, grab the instance from the raw DOM node:
+
+var instance = $('#my-select')[0]._selectR;
+
+instance.setValue(['1', '2']);
+instance.selectAll();</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-12">
+        <label class="form-label fw-semibold">Auto-Initialized via data-selectr="" Attribute</label>
+        <div class="card bg-light border-0">
+          <div class="card-body p-3" style="font-size: .85rem;">
+            <p class="mb-1 fw-bold text-muted">1. Initialize (HTML Only):</p>
+            <pre
+              class="bg-white border rounded p-2 mb-3">&lt;select id="myAutoSelect" data-selectr='{"marker":"tick"}'&gt;...&lt;/select&gt;</pre>
+
+            <p class="mb-1 fw-bold text-muted">2. Call Methods:</p>
+            <pre class="bg-white border rounded p-2 mb-0">// The library automatically creates the instance and attaches it to the DOM element.
+// You can just grab it and use it anytime!
+
+// Vanilla JS:
+document.getElementById('myAutoSelect')._selectR.clearAll();
+
+// jQuery:
+$('#myAutoSelect')[0]._selectR.clearAll();</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-12">
+        <label class="form-label fw-semibold">Destroy & Reinitialize</label>
+        <div class="card bg-light border-0">
+          <div class="card-body p-3" style="font-size: .85rem;">
+            <p class="mb-1 fw-bold text-muted">1. Destroying an instance:</p>
+            <pre class="bg-white border rounded p-2 mb-3">// Grabs the instance and completely removes all selectR styling and event listeners, 
+// reverting it back to a standard HTML &lt;select&gt;
+document.getElementById('mySelect')._selectR.destroy();</pre>
+
+            <p class="mb-1 fw-bold text-muted">2. Reinitializing:</p>
+            <pre class="bg-white border rounded p-2 mb-0">// Once destroyed, you can simply initialize it again normally
+const mySelect = new SelectR(document.getElementById('mySelect'), { mode: 'multiple' });
+
+// Or with jQuery:
+$('#mySelect').selectR({ mode: 'multiple' });</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-12">
+        <label class="form-label fw-semibold">Reusable Function Initialization</label>
+        <div class="card bg-light border-0">
+          <div class="card-body p-3" style="font-size: .85rem;">
+            <p class="mb-1 fw-bold text-muted">Initialize dynamically whenever you need to:</p>
+            <pre class="bg-white border rounded p-2 mb-0">// Define your reusable setup function
+function initMySelects(selector) {
+  // If using jQuery:
+  $(selector).selectR({ 
+    mode: 'multiple', 
+    marker: 'checkbox' 
+  });
+  
+  // Or if using Vanilla JS:
+  // document.querySelectorAll(selector).forEach(el => new SelectR(el, { mode: 'multiple' }));
+}
+
+// Call it on page load
+initMySelects('.my-custom-selects');
+
+// Call it again later if you inject new HTML dynamically
+// initMySelects('#my-newly-added-select');</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-12">
+        <label class="form-label fw-semibold">Getting the Selected Value(s)</label>
+        <div class="card bg-light border-0">
+          <div class="card-body p-3" style="font-size: .85rem;">
+            <p class="mb-1 fw-bold text-muted">Because selectR syncs with the native HTML element, you have 3 easy ways
+              to get values:</p>
+            <pre class="bg-white border rounded p-2 mb-0">// 1. Standard HTML / jQuery (Recommended)
+// Since selectR updates the hidden &lt;select&gt;, you can just read it normally!
+var val = document.getElementById('mySelect').value;
+var jqueryVal = $('#mySelect').val(); // Returns string (single) or array (multiple)
+
+// 2. Using the selectR API
+var apiVal = document.getElementById('mySelect')._selectR.getValue();
+
+// 3. Using the onChange callback during initialization
+$('#mySelect').selectR({
+  onChange: function(value, selectedItems) {
+    console.log("Value changed to:", value);
+    // 'value' is a string for single-select, or an array of strings for multiple-select
+  }
+});</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-12">
+        <label class="form-label fw-semibold">Setting a Value Programmatically</label>
+        <div class="card bg-light border-0">
+          <div class="card-body p-3" style="font-size: .85rem;">
+            <p class="mb-1 fw-bold text-muted">Use the <code>setValue()</code> method to change the selection via
+              JavaScript:</p>
+            <pre class="bg-white border rounded p-2 mb-0">// 1. Grab the instance
+var instance = document.getElementById('mySelect')._selectR;
+// or jQuery: var instance = $('#mySelect')[0]._selectR;
+
+// 2. Set a Single Value (pass a string)
+instance.setValue('apple');
+
+// 3. Set Multiple Values (pass an array of strings)
+instance.setValue(['apple', 'banana']);</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-12">
+        <label class="form-label fw-semibold">HTML Layouts (Normal vs Floating)</label>
+        <div class="card bg-light border-0">
+          <div class="card-body p-3" style="font-size: .85rem;">
+            <p class="mb-1 fw-bold text-muted">1. Normal Bootstrap Layout:</p>
+            <pre class="bg-white border rounded p-2 mb-3">&lt;div class="mb-3"&gt;
+  &lt;label class="form-label"&gt;Choose Tax Zone&lt;/label&gt;
+  &lt;select class="form-select" data-selectr='{"marker":"none"}'&gt;
+    &lt;option value=""&gt;Select Tax Zone&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;</pre>
+
+            <p class="mb-1 fw-bold text-muted">2. Floating Label Layout (Framework-Agnostic or Bootstrap):</p>
+            <p class="mb-1 text-muted" style="font-size: 0.8rem;">Ensure the <code>&lt;label&gt;</code> comes exactly
+              AFTER the <code>&lt;select&gt;</code> element inside either a <code>.selectr-floating</code> or
+              <code>.form-floating</code> container.
+            </p>
+            <pre class="bg-white border rounded p-2 mb-0">&lt;!-- Native Floating Layout --&gt;
+&lt;div class="selectr-floating mb-3"&gt;
+  &lt;select id="taxZone" data-selectr='{"marker":"none"}'&gt;
+    &lt;option value=""&gt;Select Tax Zone&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;label for="taxZone"&gt;Choose Tax Zone&lt;/label&gt;
+&lt;/div&gt;</pre>
+            &lt;label for="taxZone"&gt;Choose Tax Zone&lt;/label&gt;
+            &lt;/div&gt;</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </div><!-- /container -->
+
+  <!-- Fake AJAX endpoint simulation -->
+  <script>
+    (function () {
+      var ALL_ITEMS = [];
+      var names = ['Aardvark', 'Albatross', 'Alligator', 'Alpaca', 'Ant', 'Anteater', 'Antelope', 'Ape', 'Armadillo', 'Baboon', 'Badger', 'Barracuda', 'Bat', 'Bear', 'Beaver', 'Bee', 'Bison', 'Boar', 'Buffalo', 'Butterfly', 'Camel', 'Caribou', 'Cat', 'Caterpillar', 'Chamois', 'Cheetah', 'Chicken', 'Chimpanzee', 'Chinchilla', 'Chipmunk', 'Chough', 'Clam', 'Cobra', 'Cockroach', 'Cod', 'Cormorant', 'Coyote', 'Crab', 'Crane', 'Crocodile', 'Crow', 'Curlew', 'Deer', 'Dinosaur', 'Dog', 'Dogfish', 'Dolphin', 'Donkey', 'Duck', 'Dugong', 'Dunlin', 'Eagle', 'Echidna', 'Eel', 'Eland', 'Elephant', 'Elk', 'Emu', 'Falcon', 'Ferret', 'Finch', 'Fish', 'Flamingo', 'Fly', 'Fox', 'Frog', 'Gaur', 'Gazelle', 'Gerbil', 'Giraffe', 'Gnat', 'Goat', 'Goldfinch', 'Goosander', 'Gorilla', 'Goshawk', 'Grasshopper', 'Grouse', 'Guanaco', 'Gull', 'Hamster', 'Hare', 'Hawk', 'Hedgehog', 'Heron', 'Herring', 'Hippopotamus', 'Hornet', 'Horse', 'Human', 'Hummingbird', 'Hyena', 'Ibex', 'Ibis', 'Jackal', 'Jaguar', 'Jay', 'Jellyfish', 'Kangaroo', 'Kingfisher', 'Koala', 'Kouprey', 'Kudu', 'Lapwing', 'Lark', 'Lemur', 'Leopard', 'Lion', 'Llama', 'Lobster', 'Locust', 'Loris', 'Louse', 'Lyrebird', 'Magpie', 'Mallard', 'Mammoth', 'Manatee', 'Mandrill', 'Mink', 'Moose', 'Mosquito', 'Mouse', 'Narwhal', 'Newt', 'Nightingale', 'Octopus', 'Okapi', 'Opossum', 'Ostrich', 'Otter', 'Owl', 'Ox', 'Oyster', 'Panther', 'Parrot', 'Partridge', 'Peafowl', 'Pelican', 'Penguin', 'Pheasant', 'Pig', 'Pigeon', 'Pony', 'Porcupine', 'Porpoise', 'Quail', 'Quelea', 'Rabbit', 'Raccoon', 'Rail', 'Ram', 'Rat', 'Raven', 'Red deer', 'Red panda', 'Reindeer', 'Rhinoceros', 'Rook', 'Salamander', 'Salmon', 'Sand Dollar', 'Sandpiper', 'Sardine', 'Scorpion', 'Seahorse', 'Seal', 'Shark', 'Sheep', 'Shrew', 'Skunk', 'Snail', 'Snake', 'Spider', 'Squid', 'Squirrel', 'Starling', 'Stingray', 'Stinkbug', 'Stork', 'Swallow', 'Swan', 'Tiger', 'Toad', 'Trout', 'Turkey', 'Turtle', 'Viper', 'Vulture', 'Wallaby', 'Walrus', 'Wasp', 'Wildebeest', 'Wolf', 'Wolverine', 'Wombat', 'Woodcock', 'Worm', 'Wren', 'Yak', 'Zebra'];
+
+      ALL_ITEMS = names.map(function (n, i) {
+        return { value: String(i + 1), label: n, description: 'Kingdom Animalia Ã‚Â· ID ' + (i + 1) };
+      });
+
+      // Monkey-patch fetch for our demo URL only
+      var _nativeFetch = window.fetch;
+      window.fetch = function (url, opts) {
+        if (typeof url === 'string' && url.indexOf('/api/fake-animals') !== -1) {
+          return new Promise(function (resolve) {
+            var urlObj = new URL(url, location.href);
+            var q = (urlObj.searchParams.get('q') || '').toLowerCase();
+            var page = parseInt(urlObj.searchParams.get('page') || '1', 10);
+            var pageSize = parseInt(urlObj.searchParams.get('pageSize') || '20', 10);
+
+            setTimeout(function () {
+              var filtered = ALL_ITEMS.filter(function (i) { return !q || i.label.toLowerCase().indexOf(q) !== -1; });
+              var start = (page - 1) * pageSize;
+              var end = start + pageSize;
+              var slice = filtered.slice(start, end);
+              var body = JSON.stringify({ results: slice, hasMore: end < filtered.length });
+              resolve(new Response(body, { status: 200, headers: { 'Content-Type': 'application/json' } }));
+            }, 300); // fake network delay
+          });
+        }
+        return _nativeFetch.apply(this, arguments);
+      };
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="selectR.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 1. Single selects Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      var s1 = selectR('#single1', {
+        mode: 'single', marker: 'checkbox', showClearButton: true,
+        onChange: function (v) { document.getElementById('out1').textContent = 'Value: ' + (v || '(none)'); }
+      });
+      var s2 = selectR('#single2', {
+        mode: 'single', marker: 'tick', showClearButton: false,
+        onChange: function (v) { document.getElementById('out2').textContent = 'Value: ' + (v || '(none)'); }
+      });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 2. Multiple Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#multi1', {
+        mode: 'multiple', marker: 'checkbox', showToolbar: true,
+        tagLimit: 2, showDrawer: true,
+        onChange: function (vals) { document.getElementById('out3').textContent = 'Values: [' + vals.join(', ') + ']'; }
+      });
+      selectR('#multi2', {
+        mode: 'multiple', marker: 'circle',
+        summaryThreshold: 3, summaryLabel: 'Items Selected', showDrawer: true,
+        onChange: function (vals) { document.getElementById('out4').textContent = 'Values: [' + vals.join(', ') + ']'; }
+      });
+      selectR('#multi3', {
+        mode: 'multiple', marker: 'checkbox', tagLimit: 3, maxSelected: 6, showDrawer: true, showToolbar: true
+      });
+      selectR('#multi4', {
+        mode: 'multiple', marker: 'tick', tagLimit: null, showDrawer: true, showToolbar: true
+      });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 2b. Display styles Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#dsPill', { mode: 'multiple', marker: 'checkbox', displayStyle: 'pill', tagLimit: 2, showDrawer: true, showToolbar: true });
+      selectR('#dsPlain', { mode: 'multiple', marker: 'checkbox', displayStyle: 'plain', tagLimit: 2, showDrawer: true, showToolbar: true });
+      selectR('#dsComma', { mode: 'multiple', marker: 'checkbox', displayStyle: 'comma', commaSeparator: ' Ã‚Â· ', tagLimit: 3, showDrawer: true, showToolbar: true });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 3. Groups Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#grouped1', { mode: 'single', marker: 'tick' });
+      selectR('#grouped2', { mode: 'multiple', marker: 'checkbox', showToolbar: true });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 4. Rich options Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#richBadge', { mode: 'single', marker: 'tick', showClearButton: true });
+      selectR('#richDesc', { mode: 'single', marker: 'circle', showClearButton: true, maxHeight: 280 });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 5. Sizes Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#sizeSm', { size: 'sm', marker: 'tick' });
+      selectR('#sizeMd', { marker: 'tick' });
+      selectR('#sizeLg', { size: 'lg', marker: 'tick' });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 6. Validation Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#valValid', { marker: 'tick', validationClass: 'is-valid', showClearButton: false });
+      selectR('#valInvalid', { marker: 'tick', validationClass: 'is-invalid' });
+      selectR('#valDisabled', { disabled: true });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 7. Marker styles Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#mkCheckbox', { mode: 'multiple', marker: 'checkbox' });
+      selectR('#mkTick', { mode: 'multiple', marker: 'tick' });
+      selectR('#mkCircle', { mode: 'multiple', marker: 'circle' });
+      selectR('#mkNone', { mode: 'multiple', marker: 'none' });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 8. AJAX Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      selectR('#ajaxSingle', {
+        mode: 'single', marker: 'tick',
+        ajax: {
+          url: '/api/fake-animals',
+          processResults: function (d) { return { results: d.results, hasMore: d.hasMore }; },
+          cache: true,
+        },
+        infiniteScroll: true, pageSize: 20, searchMinLength: 0, placeholder: 'Search animals',
+        onChange: function (v) { document.getElementById('outAjax').textContent = 'Value: ' + (v || '(none)'); }
+      });
+      selectR('#ajaxMulti', {
+        mode: 'multiple', marker: 'checkbox', showToolbar: true,
+        ajax: {
+          url: '/api/fake-animals',
+          processResults: function (d) { return { results: d.results, hasMore: d.hasMore }; },
+          cache: false,
+        },
+        infiniteScroll: true, pageSize: 15, placeholder: 'Search & select animals',
+        onChange: function (vals) { document.getElementById('outAjaxMulti').textContent = 'Selected: [' + vals.join(', ') + ']'; }
+      });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 9. Programmatic API Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      var apiInst = selectR('#apiDemo', {
+        mode: 'multiple', marker: 'checkbox', showToolbar: true,
+        onChange: function (vals) { document.getElementById('outApi').textContent = 'Values: [' + vals.join(', ') + ']'; }
+      });
+      var disabled = false;
+      document.getElementById('btnSetVal').addEventListener('click', function () { apiInst.setValue(['2', '4']); });
+      document.getElementById('btnSelAll').addEventListener('click', function () { apiInst.selectAll(); });
+      document.getElementById('btnClear').addEventListener('click', function () { apiInst.clearAll(); });
+      document.getElementById('btnAddOpt').addEventListener('click', function () {
+        var n = Math.random().toString(36).slice(2, 7);
+        apiInst.addOption({ value: n, label: 'Dynamic-' + n });
+      });
+      document.getElementById('btnDisable').addEventListener('click', function () {
+        disabled ? apiInst.enable() : apiInst.disable();
+        disabled = !disabled;
+      });
+      document.getElementById('btnOpen').addEventListener('click', function () {
+        if (apiInst._isOpen) { apiInst.close(); } else { apiInst.open(); }
+      });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ Marker switcher Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      var mswInst = selectR('#markerSwitch', { mode: 'multiple', marker: 'checkbox' });
+      document.querySelectorAll('[data-marker]').forEach(function (btn) {
+        btn.addEventListener('click', function () { mswInst.setMarker(btn.getAttribute('data-marker')); });
+      });
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ 11. jQuery plugin demo (if jQuery present) Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      if (typeof jQuery !== 'undefined') {
+        jQuery('#jqueryDemo').selectR({ marker: 'circle', showClearButton: true });
+      }
+
+      // Ã¢â€â‚¬Ã¢â€â‚¬ Dark mode toggle Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      document.getElementById('themeToggle').addEventListener('click', function () {
+        var html = document.documentElement;
+        var isDark = html.getAttribute('data-bs-theme') === 'dark';
+        html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+        this.textContent = isDark ? 'Ã°Å¸Å’â„¢ Dark mode' : 'Ã¢Ëœâ‚¬Ã¯Â¸Â Light mode';
+      });
+
+    });
+  </script>
+</body>
+
+</html>
+
