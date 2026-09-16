@@ -43,7 +43,7 @@
 
     // Appearance
     size: '',                    // '' | 'sm' | 'lg'
-    marker: 'checkbox',          // 'checkbox' | 'tick' | 'circle' | 'none'
+    marker: 'none',              // 'checkbox' | 'tick' | 'circle' | 'none'
     showClearButton: true,       // show ✕ to clear selection (single mode)
     maxHeight: 240,              // dropdown list max-height in px
     dropdownWidth: null,         // null = 100% of control, or px/string e.g. '300px'
@@ -52,7 +52,7 @@
 
     // Tags / display style (multiple mode)
     maxSelected: null,           // max number of selections, null = unlimited
-    displayStyle: 'pill',        // how selected items appear in the control:
+    displayStyle: 'plain',       // how selected items appear in the control:
     //   'pill'  — coloured badge tags with individual ✕ remove buttons (default)
     //   'plain' — label text with ✕ remove, no background / border
     //   'comma' — all labels joined by commaSeparator, no per-item remove
@@ -1410,16 +1410,18 @@
     text.textContent = item.label;
     tag.appendChild(text);
 
-    var rm = document.createElement('button');
-    rm.type = 'button';
-    rm.className = 'selectr-tag-remove';
-    rm.setAttribute('aria-label', 'Remove ' + item.label);
-    rm.innerHTML = ICONS.close;
-    rm.addEventListener('click', function (e) {
-      e.stopPropagation();
-      self._selectItem(item.value);
-    });
-    tag.appendChild(rm);
+    if (style !== 'plain') {
+      var rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'selectr-tag-remove';
+      rm.setAttribute('aria-label', 'Remove ' + item.label);
+      rm.innerHTML = ICONS.close;
+      rm.addEventListener('click', function (e) {
+        e.stopPropagation();
+        self._selectItem(item.value);
+      });
+      tag.appendChild(rm);
+    }
 
     return tag;
   };
@@ -1805,7 +1807,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     var els = Array.prototype.slice.call(
-      document.querySelectorAll('[data-selectr], [data-sr-mode], [data-sr-marker], [data-sr-display-style]')
+      document.querySelectorAll('.selectR, .selectr, [data-selectr], [data-sr-mode], [data-sr-marker], [data-sr-display-style]')
     );
     els.forEach(function (el) {
       if (el._selectR) return;                      // already initialised
